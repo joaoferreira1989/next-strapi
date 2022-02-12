@@ -21,5 +21,5 @@ export default function Layout({ title, keywords, description, children }) {
 Layout.defaultProps = {
   title: 'DJ Events',
   description: 'Find latest DJ events',
-  keywords: 'music, dj, edm'
+  keywords: 'music, dj, edm, disc, jockey'
 }
