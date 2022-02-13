@@ -1,5 +1,7 @@
 import Head from "next/head"
-import styles from "./Layout.module.css"
+import styles from "./layout.module.css"
+import Header from "../header/header"
+import Footer from "../footer/footer"
 
 export default function Layout({ title, keywords, description, children }) {
   return (
@@ -11,9 +13,13 @@ export default function Layout({ title, keywords, description, children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Header/>
+
       <div className={styles.container}>
         {children}
       </div>
+
+      <Footer/>
     </div>
   )
 }
