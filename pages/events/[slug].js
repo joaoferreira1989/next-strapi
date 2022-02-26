@@ -25,14 +25,14 @@ export default function EventPage({ evt }) {
                 </div>
 
                 <span>
-                    {evt.date} at {evt.time}
+                    {new Date(evt.attributes.date).toLocaleDateString('pt-PT')} at {evt.attributes.time}
                 </span>
-                <h1>{evt.name}</h1>
+                <h1>{evt.attributes.name}</h1>
 
-                {evt.image && (
+                {evt.attributes.image && (
                     <div className={styles.image}>
                         <Image
-                            src={evt.image}
+                            src={evt.attributes.image.data.attributes.formats.medium.url}
                             width={960}
                             height={600}
                         />
@@ -40,11 +40,11 @@ export default function EventPage({ evt }) {
                 )}
 
                 <h3>Performers:</h3>
-                <p>{evt.performers}</p>
+                <p>{evt.attributes.performers}</p>
                 <h3>Description:</h3>
-                <p>{evt.description}</p>
-                <h3>Venue: {evt.venue}</h3>
-                <p>{evt.address}</p>
+                <p>{evt.attributes.description}</p>
+                <h3>Venue: {evt.attributes.venue}</h3>
+                <p>{evt.attributes.address}</p>
 
                 <Link href='/events'>
                     <a className={styles.back}>{'<'} Go Back</a>
@@ -80,12 +80,12 @@ export default function EventPage({ evt }) {
 // }
 
 export async function getServerSideProps({ query: { slug } }) {
-    const response = await fetch(`${API_URL}/api/events/${slug}`);
+    const response = await fetch(`${API_URL}/api/events?populate=%2A&[filters][slug][$eq]=${slug}`);
     const events = await response.json();
 
     return {
         props: {
-            evt: events[0]
+            evt: events.data[0]
         }
     };
 }
